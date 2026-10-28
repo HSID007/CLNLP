@@ -6,7 +6,8 @@ The codebase is split into three primary laboratories:
 1. **Lab 1**: Exploratory Data Analysis (EDA) and Visualization on Tabular Datasets.
 2. **LAB 2**: NLP Text Preprocessing, Word/Sentence Tokenization (using NLTK, spaCy, and Regex), and Stop Words Filtering.
 3. **Lab 3**: Stemming, Lemmatization, and Regular Expression Pattern Matching.
-
+4. **Lab 4**: Advanced Text Processing & Document Modeling
+5. **LAB 5**: Advanced Subword Tokenization, POS Tagging, & Word Vector Embeddings
 ---
 
 ---
