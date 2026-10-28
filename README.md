@@ -78,8 +78,39 @@ Stop words (e.g., "is", "the", "a", "an", "to") carry high frequency but low sem
     *   Filters tokens against the NLTK stop words dictionary.
     *   Outputs the original tokens, filtered tokens, and isolates the stop words that were stripped out.
 
----
 
+### 🔬 Lab 3: Stemming, Lemmatization, and Regular Expression Pattern Matching
 
+This laboratory focuses on morphological normalization techniques (Stemming and Lemmatization) and pattern-based information extraction using Regular Expressions. These techniques are crucial for reducing vocabulary dimensionality and extracting structured data from unstructured text.
 
----
+#### 1. Experiment 3.1: Stemming using Porter Stemmer
+Stemming is a heuristic process that chops off the ends of words to reduce them to their common base form or "stem". This experiment utilizes the classic **Porter Stemmer** via the NLTK library to demonstrate rule-based suffix stripping.
+*   **Concept**: Rule-based inflectional reduction.
+*   **Implementation**:
+    *   Loads a target list of inflected words (including verbs, plurals, and gerunds like *playing*, *studies*, *computers*).
+    *   Applies the Porter Stemming algorithm sequentially.
+    *   Outputs a side-by-side comparative table demonstrating how grammatical inflections are mapped back to their base stems (e.g., *studies* $\rightarrow$ *studi*, *connection* $\rightarrow$ *connect*).
+    *   *Observation*: Highlights common issues like over-stemming and under-stemming where the resulting stem is not a valid dictionary word.
+
+#### 2. Experiment 3.2: Lemmatization with POS Tagging
+Unlike stemming, lemmatization uses vocabulary and morphological analysis to return the dictionary form of a word, known as the *lemma*. This experiment implements NLTK's **WordNetLemmatizer** to contrast how lemma extraction behaves across different Parts of Speech (POS).
+*   **Concept**: Vocabulary-accurate morphological normalization.
+*   **Implementation**:
+    *   Iterates through a diverse set of words containing irregular plurals and verb tenses (e.g., *mice*, *went*, *better*, *leaves*).
+    *   Applies lemmatization across three distinct POS parameters: **Noun (`pos='n'`)**, **Verb (`pos='v'`)**, and **Adjective (`pos='a'`)**.
+    *   Outputs a comprehensive matrix displaying the varying structural outputs.
+    *   *Observation*: Illustrates how lemmatization preserves actual linguistic words and demonstrates the high dependency of lemmas on correct grammatical context (e.g., *better* as an adjective maps to *good*, *went* as a verb maps to *go*).
+
+#### 3. Experiment 3.3: Regular Expressions (Regex) for Information Extraction
+Regular expressions provide an extremely powerful, zero-dependency mechanism for parsing, validating, and extracting specific structural patterns from raw unstructured text data.
+*   **Concept**: Pattern matching and information extraction.
+*   **Implementation**:
+    *   Parses a raw multi-line text corpus containing contact details, social links, and metadata.
+    *   Implements customized regex engines using Python's `re` module to capture:
+        1.  **Email Addresses**: Using character-class boundaries matching structural `@` domains.
+        2.  **URLs**: Matching protocols (`http`, `https`) and `www` subdomains.
+        3.  **Mobile Numbers**: Identifying international prefixes (e.g., `+91-`) and standard 10-digit formats.
+        4.  **Hashtags**: Isolating metadata tags prefixed with `#`.
+        5.  **Mentions**: Tracking user handles starting with `@` symbols.
+    *   Outputs isolated, clean arrays of structured metadata extracted directly from the unstructured text blocks.
+
