@@ -114,3 +114,28 @@ Regular expressions provide an extremely powerful, zero-dependency mechanism for
         5.  **Mentions**: Tracking user handles starting with `@` symbols.
     *   Outputs isolated, clean arrays of structured metadata extracted directly from the unstructured text blocks.
 
+### 🔍 Lab 4: Advanced Text Processing & Document Modeling
+This lab covers the essential methods used in search engines, text mining, and information retrieval. It covers word-frequency distributions, Named Entity Recognition (NER) utilizing modern NLP pipelines, and manual tf-idf construction for information extraction.
+
+#### 1. Experiment 4.1: Term-Frequency Analysis & Named Entity Recognition (with toolkits)
+This experiment utilizes industrial-strength NLP libraries to tokenize texts, compute term frequencies, and identify semantic entities.
+*   **Term-Frequency (TF) Analysis (NLTK)**:
+    *   *Implementation*: Tokenizes the raw input text using NLTK's `word_tokenize`, filters non-alphabetic tokens, and aggregates frequencies using a `Counter` dictionary to output a structured `.csv` alongside the top 10 most frequent terms.
+*   **Named Entity Recognition (spaCy)**:
+    *   *Implementation*: Employs the `en_core_web_sm` model to parse unstructured corpora and extract semantic tags, cataloging entities and their corresponding types (e.g., PERSON, ORG, GPE, DATE).
+
+#### 2. Experiment 4.2: Term-Frequency Analysis (without any toolkit)
+To fully grasp tokenization mechanics, this experiment builds a basic dictionary loader and string parser without the aid of existing natural language packages.
+*   **Implementation**:
+    *   Loads raw text files, normalizes all characters to lowercase, and strips punctuation using native Python `string.punctuation` mapping structures.
+    *   Manually tokenizes strings by splitting on white spaces, computes unique term frequencies, and exports results to a `.csv` format.
+
+#### 3. Experiment 4.3: TF-IDF Calculation (without NLP toolkits)
+Term Frequency-Inverse Document Frequency (TF-IDF) scores how important a word is to a document in a collection or corpus. This experiment manually implements TF-IDF indexing from mathematical first principles.
+*   **Mathematical Models Used**:
+    *   $$\text{Term Frequency (TF)} = \frac{\text{Count of term } t \text{ in document } d}{\text{Total words in document } d}$$
+    *   $$\text{Inverse Document Frequency (IDF)} = \log_{10}\left(\frac{\text{Total number of documents } N}{\text{Document Frequency of term } t}\right)$$
+    *   $$\text{TF-IDF} = \text{TF} \times \text{IDF}$$
+*   **Implementation**:
+    *   Calculates TF, DF, and IDF scores step-by-step for a controlled sample corpus.
+    *   Identifies the top 10 terms with the highest TF-IDF scores per document to isolate high-value keywords from background noise.
