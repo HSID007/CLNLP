@@ -139,3 +139,49 @@ Term Frequency-Inverse Document Frequency (TF-IDF) scores how important a word i
 *   **Implementation**:
     *   Calculates TF, DF, and IDF scores step-by-step for a controlled sample corpus.
     *   Identifies the top 10 terms with the highest TF-IDF scores per document to isolate high-value keywords from background noise.
+ 
+
+### 🧠 LAB 5: Advanced Subword Tokenization, POS Tagging, & Word Vector Embeddings
+
+This lab deep-dives into advanced vocabulary modeling strategies, syntactic analysis, and dense semantic representations. In modern NLP pipelines, handling out-of-vocabulary (OOV) terms, tagging grammatical structure, and understanding word-to-word relationships are key layers before feeding textual features into deep learning models.
+
+---
+
+### 🔬 Lab Experiments
+
+#### 1. Experiment 5.1: BPE-based Tokenizer
+Byte-Pair Encoding (BPE) is a subword tokenization scheme that builds a vocabulary iteratively by pairing characters or character sequences based on their co-occurrence frequency. It prevents Out-Of-Vocabulary (OOV) errors by splitting unseen words into smaller subword blocks.
+*   **a. Pretrained BPE Model (GPT-2)**:
+    *   *Implementation*: Utilizes Hugging Face's `GPT2Tokenizer` to convert a complex raw text into subwords and displays corresponding vocabulary IDs.
+*   **b. Custom BPE from Scratch**:
+    *   *Implementation*: Implements the raw token-frequency merging algorithm from scratch, starting with character-level splits and iteratively merging the most frequent byte pairs up to a custom frequency limit.
+
+#### 2. Experiment 5.2: SentencePiece Tokenizer
+SentencePiece is a language-independent subword tokenizer that treats the input text as a raw character sequence, including spaces (modeled with meta-symbol `_` or `▁`), removing the hard dependency on language-specific pre-tokenizers.
+*   **a. Pretrained SentencePiece (XLNet)**:
+    *   *Implementation*: Implements Hugging Face's `XLNetTokenizer` (`xlnet-base-cased`) to tokenize and encode paragraphs into dense SentencePiece vocab units.
+*   **b. Custom SentencePiece Training**:
+    *   *Implementation*: Trains a fresh unigram SentencePiece model directly on a local corpus using `sentencepiece.SentencePieceTrainer` and processes raw text through the generated vocabulary weights.
+
+#### 3. Experiment 5.3: Part-of-Speech (POS) Tagging on Sample Text
+Part-of-Speech tagging assigns grammatical roles (e.g., nouns, verbs, determiners) to words in a sentence, which is crucial for downstream parsing tasks.
+*   **a. spaCy Tagging**:
+    *   *Implementation*: Analyzes the syntactic structure of a sentence using spaCy's optimized transformer-based neural models (`en_core_web_sm`), exporting granular part-of-speech tags.
+*   **b. NLTK Tagging**:
+    *   *Implementation*: Evaluates the same sample sentence using standard Penn Treebank tagging algorithms from the Natural Language Toolkit (`nltk`).
+
+#### 4. Experiment 5.4: POS Tagging & Frequency Mapping on Corpus
+Grammatical composition varies widely across contexts and corpora.
+*   **Implementation**: Parses an entire input document using spaCy, computes the frequencies of each unique word, and prints a structured tabular report mapping tokens, their tags, descriptions, and occurrence frequencies.
+
+#### 5. Experiment 5.5: Word2Vec - Continuous Bag-of-Words (CBOW)
+Word2Vec models map words to low-dimensional continuous vector spaces. The CBOW architecture learns to predict a target center word given its surrounding context words.
+*   **Implementation**: Trains a 50-dimensional Gensim `Word2Vec` model on a custom 10-line text corpus. It extracts the numerical vector for the word `"learning"` and reports the 3 most similar words based on cosine distance.
+
+#### 6. Experiment 5.6: Word2Vec - Skip-Gram
+The Skip-Gram architecture flips CBOW; it uses a single center word to predict surrounding context words, capturing highly specific semantic relationships even for rarer words.
+*   **Implementation**: Configures Gensim's `Word2Vec` parameter `sg=1` to train a Skip-Gram network on the corpus, retrieves the dense embedding for `"language"`, and prints its top 5 semantically closest neighbors.
+
+#### 7. Experiment 5.7: Semantic Cosine Similarity Evaluation
+Vector mathematics allows us to compute the exact semantic similarity between concepts by calculating the angle between their high-dimensional vectors.
+*   **Implementation**: Extracts trained embeddings from the neural layers and evaluates similarity ratings for specific bigram pairings including `("machine", "learning")` and `("natural", "language")` using cosine metric algorithms.
