@@ -2,12 +2,19 @@
 
 Welcome to the **Computational Linguistics and Natural Language Processing (NLP) Laboratory** repository. This repository is dedicated to exploring the core foundations of data analysis, exploratory data visualization, and fundamental text preprocessing pipelines in NLP. 
 
-The codebase is split into three primary laboratories:
+The codebase is split into ten laboratory experiments:
 1. **Lab 1**: Exploratory Data Analysis (EDA) and Visualization on Tabular Datasets.
 2. **LAB 2**: NLP Text Preprocessing, Word/Sentence Tokenization (using NLTK, spaCy, and Regex), and Stop Words Filtering.
 3. **Lab 3**: Stemming, Lemmatization, and Regular Expression Pattern Matching.
 4. **Lab 4**: Advanced Text Processing & Document Modeling
 5. **LAB 5**: Advanced Subword Tokenization, POS Tagging, & Word Vector Embeddings
+6. **Lab 6**: GloVe Embeddings & Statistical N-gram Language Model
+7. **Lab 7**: Sentiment Analysis on IMDb (Logistic Regression, BiLSTM, Transformer, DistilBERT)
+8. **Lab 8**: Cross-Lingual Abstractive Summarization (mT5 vs mBART) on Bengali XL-Sum
+9. **Lab 9**: News Classification on AG News with Classical ML and a Flask App (`Exp9_News_Classification/`)
+10. **Lab 10**: Low-Resource Neural Machine Translation, English to Assamese with NLLB-200 (`Exp10_Low_Resource_NMT/`)
+
+The complete lab report covering all ten experiments (Word and PDF) is in the [`Report/`](Report/) folder.
 ---
 
 ---
@@ -186,3 +193,70 @@ The Skip-Gram architecture flips CBOW; it uses a single center word to predict s
 #### 7. Experiment 5.7: Semantic Cosine Similarity Evaluation
 Vector mathematics allows us to compute the exact semantic similarity between concepts by calculating the angle between their high-dimensional vectors.
 *   **Implementation**: Extracts trained embeddings from the neural layers and evaluates similarity ratings for specific bigram pairings including `("machine", "learning")` and `("natural", "language")` using cosine metric algorithms.
+
+---
+
+### 🧮 Lab 6: GloVe Embeddings & Statistical Language Model
+*Notebook: `Exp_6.ipynb`*
+
+#### 1. Experiment 6.1: GloVe Word Embeddings
+*   **From scratch**: Builds a vocabulary (73 words) and a co-occurrence matrix, then trains word vectors by gradient descent on the GloVe weighted least-squares loss for 150 epochs (loss falls from 9.6483 at epoch 25 to 7.3252 at epoch 150).
+*   **Pretrained**: Loads `glove-wiki-gigaword-100` through Gensim and queries the nearest neighbours of `"king"`.
+
+#### 2. Experiment 6.2: Bigram Language Model
+*   **Implementation**: Counts unigrams and bigrams in a small corpus, converts them to conditional probabilities and predicts the most likely next word for given contexts.
+
+---
+
+### 🎬 Lab 7: Sentiment Analysis on IMDb
+*Notebook: `Exp_7.ipynb`*
+
+Compares four classifiers on the 50,000-review IMDb dataset after HTML, punctuation and stop-word cleaning:
+
+| Model | Accuracy |
+|---|---|
+| Logistic Regression (TF-IDF) | 0.8903 |
+| Bidirectional LSTM | 0.8726 |
+| Vanilla Transformer encoder | 0.8823 |
+| DistilBERT SST-2 (pretrained, 200-review subset) | 0.8900 |
+
+The first three are scored on a 10,000-review test split; DistilBERT is scored on a 200-review subset, so its number is not strictly comparable.
+
+---
+
+### 📰 Lab 8: Cross-Lingual Abstractive Summarization (mT5 vs mBART)
+*Notebook: `Exp_8.ipynb`*
+
+*   **Implementation**: Summarizes 10 Bengali XL-Sum test articles with `csebuetnlp/mT5_multilingual_XLSum` and `facebook/mbart-large-50-many-to-many-mmt`, then scores them with ROUGE and multilingual BERTScore.
+*   **Result**: mBERT-score F1 is 0.7841 for mT5 and 0.6054 for mBART. ROUGE is 0.0 for both, most likely because the default ROUGE tokenizer discards Bengali script, so BERTScore is the meaningful comparison. Only 10 samples were used.
+
+---
+
+### 🗞️ Lab 9: News Classification on AG News
+*Folder: `Exp9_News_Classification/`*
+
+End-to-end classifier for the AG News corpus (120,000 training / 7,600 test articles, four classes): EDA, preprocessing (cleaning, stop-word removal, Porter stemming), Bag of Words and TF-IDF (unigram + bigram) features, five model families with cross-validated tuning, model selection, and a Flask web app with a JSON API.
+
+*   **Best model**: calibrated LinearSVC on TF-IDF, 92.36% test accuracy, weighted F1 0.923.
+*   **Contents**: `notebooks/` (five notebooks with outputs), `src/` (preprocessing and prediction), `app/` (Flask app), `tests/`, `reports/` (metrics and charts).
+*   The dataset CSVs and trained model files are not committed; see the folder's own README to regenerate them.
+
+---
+
+### 🌐 Lab 10: Low-Resource Neural Machine Translation (English to Assamese)
+*Folder: `Exp10_Low_Resource_NMT/`*
+
+Fine-tunes `facebook/nllb-200-distilled-600M` on a 40,000-pair sample of the open AI4Bharat Samanantar English-Assamese corpus (32k/4k/4k split) for 2 epochs on a Kaggle T4 GPU (54.3 minutes).
+
+| Model | BLEU | chrF |
+|---|---|---|
+| Pretrained | 7.45 | 31.82 |
+| Fine-tuned | 9.80 | 35.29 |
+
+*   **Contents**: `src/` (preprocess, train, evaluate), `notebooks/` (Kaggle notebooks), `results/` (metrics, training log, sample translations), `docs/`.
+*   Developed by team members; the model checkpoint is not included in the repository.
+
+---
+
+### 📄 Lab Report
+`Report/NLP_Lab_Report_Experiments_1-10.docx` and `.pdf` contain the combined report: title page, contents, and for each experiment an abstract, description of the code, and the implemented code with outputs.
